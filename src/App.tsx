@@ -1,26 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Adicionar from './Adicionar/Adicionar'
+import Total from './Total/Total'
+import Remover from './Remover/Remover'
+
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+
+interface Store {
+  carrinho: number
 }
 
-export default App;
+const initialState: Store = {
+  carrinho: 0
+}
+
+function reducer(state = initialState , action: any){
+  switch(action.type){
+    case 'ADICIONAR_CARRINHO':
+      return{
+        carrinho: state.carrinho + 1
+      }
+
+    case 'DIMINUIR_CARRINHO':
+      return{
+        carrinho: state.carrinho - 1
+      }
+
+      default:
+        return state
+  }
+}
+
+const store = createStore(reducer)
+
+const App = () => {
+  return (
+    <Provider store={store}>
+
+      <h1>iphone 12 Pro Max</h1>
+      <Adicionar />
+      <Total />
+      <Remover />
+    </Provider>
+  )
+}
+
+export default App
